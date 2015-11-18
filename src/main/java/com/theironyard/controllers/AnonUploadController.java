@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by jessicahuffstutler on 11/18/15.
@@ -37,7 +39,16 @@ public class AnonUploadController {
         anonFile.name = f.getName();//name on the server, where we're saving it
         files.save(anonFile);
 
+        List<AnonFile> fl = (List<AnonFile>) files.findAll();
+
+        if (fl.size() > 10) {
+            for (int i = 0; i < fl.size() - 10; i++) {
+                AnonFile anonFileToRemove = fl.get(0);
+                files.delete(anonFileToRemove.id);
+            }
+
+        }
+
         response.sendRedirect("/");
     }
-
 }
