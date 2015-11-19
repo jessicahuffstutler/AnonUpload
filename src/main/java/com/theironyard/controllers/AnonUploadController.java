@@ -39,8 +39,19 @@ public class AnonUploadController {
         anonFile.isPermanent = isPermanent;
         files.save(anonFile);
 
-        List<AnonFile> afl = (List<AnonFile>) files.findAll();
+        List<AnonFile> afl = (List<AnonFile>) files.findAll(); //we can cast this because Iterable is a super Interface that is implemented by List
 
+
+        //Query method replaces the below simple non custom query method
+        ArrayList<AnonFile> filteredList = (ArrayList<AnonFile>) files.findAllByIsPermanent(false);
+        if (filteredList.size() > 10) {
+            AnonFile anonFileToRemove = filteredList.get(0);
+            files.delete(anonFileToRemove);
+            File tempFile = new File("public", anonFileToRemove.name);
+            tempFile.delete();
+        }
+
+        /*Simple non custom query method:
         ArrayList<AnonFile> npfl = new ArrayList(); //list of non permanent images
 
         for (AnonFile p : afl) {
@@ -49,14 +60,15 @@ public class AnonUploadController {
             }
         }
 
-        if (npfl.size() > 3) {
-            for (int i = 0; i < npfl.size() - 3; i++) {
+        if (npfl.size() > 10) {
+            for (int i = 0; i < npfl.size() - 10; i++) {
                 AnonFile anonFileToRemove = npfl.get(0);
                 files.delete(anonFileToRemove.id);
                 File tempFile = new File("public", anonFileToRemove.name);
                 tempFile.delete();
             }
         }
+        */
 
         response.sendRedirect("/");
     }
