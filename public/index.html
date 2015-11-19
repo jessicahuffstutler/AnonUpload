@@ -8,8 +8,11 @@
 
 <form action="upload" enctype="multipart/form-data" method="post">
     <input type="file" name="file"/>
+    <input type="text" placeholder="Comment" name="comment"/>
+    <input type="checkbox" name="isPermanent" id="isPermanent"/> <label for="isPermanent">Permanent?</label>
     <button type="submit">Upload</button>
 </form>
+
 <div id="fileList"></div>
 <script src="jquery-2.1.4.min.js"></script>
 <script src="main.js"></script>
