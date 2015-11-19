@@ -49,10 +49,12 @@ public class AnonUploadController {
             }
         }
 
-        if (npfl.size() > 10) {
-            for (int i = 0; i < npfl.size() - 10; i++) {
+        if (npfl.size() > 3) {
+            for (int i = 0; i < npfl.size() - 3; i++) {
                 AnonFile anonFileToRemove = npfl.get(0);
                 files.delete(anonFileToRemove.id);
+                File tempFile = new File("public", anonFileToRemove.name);
+                tempFile.delete();
             }
         }
 
